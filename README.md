@@ -5,50 +5,6 @@ The project is built using **Kotlin**, follows modern Android development practi
 
 ---
 
-## 📌 Assignment
-
-**Assignment 2 – Create and Run an Android App**
-
-This assignment focuses on:
-
-* Android app creation
-* Activity lifecycle management
-* Explicit and implicit intents
-
----
-
-## 📱 App Requirements (Assignment 2)
-
-### Main Activity
-
-* Displays:
-
-    * Full name
-    * Student ID
-* Includes two buttons:
-
-    * **Start Activity Explicitly**
-      Launches the second activity using an explicit intent
-    * **Start Activity Implicitly**
-      Launches the second activity using an implicit intent
-
-### Second Activity
-
-* Displays a list of **at least five mobile software engineering challenges**
-* Includes a button labeled **Main Activity** that returns to the main activity
-
----
-
-## 🔁 Intent Implementation Notes
-
-* **Explicit Intent:**
-  Uses a direct class reference to launch `SecondActivity`.
-
-* **Implicit Intent:**
-  Uses a custom intent action resolved via an `intent-filter` declared in `AndroidManifest.xml`.
-
----
-
 ## 🛠️ Development Environment
 
 ### IDE
@@ -82,14 +38,12 @@ This assignment focuses on:
 * Android Studio installed
 * Android SDK configured via Android Studio
 * At least one of the following:
+  * Android Emulator (AVD)
+  * Physical Android device with USB debugging enabled
 
-    * Android Emulator (AVD)
-    * Physical Android device with USB debugging enabled
-
-### Steps
+### Using Android Studio (GUI)
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/winston-spencer/CS712AndroidApp.git
    ```
@@ -98,7 +52,184 @@ This assignment focuses on:
 4. Navigate to the cloned `CS712AndroidApp` directory
 5. Allow Gradle to sync completely
 6. Select a device/emulator
-7. Click **Run ▶️**
+7. Click **Run ▶️** or **Debug ⚙️**
+
+### Using Command Line
+
+#### **Clean the Build**
+Remove all build artifacts and intermediate files:
+
+```bash
+./gradlew clean
+```
+
+#### **Build the Project**
+Build the debug APK:
+
+```bash
+./gradlew build
+```
+
+Build a release APK (unsigned):
+
+```bash
+./gradlew assembleRelease
+```
+
+Build debug APK only (faster):
+
+```bash
+./gradlew assembleDebug
+```
+
+#### **Run the Application**
+
+**Prerequisites:** Ensure an Android emulator is running or a physical device is connected via USB with USB debugging enabled.
+
+**Install and run on connected device/emulator:**
+
+```bash
+./gradlew installDebug
+```
+
+Then launch the app:
+
+```bash
+adb shell am start -n edu.ndsu.csci/.MainActivity
+```
+
+**Or, build, install, and run in one command:**
+
+```bash
+./gradlew installDebug && adb shell am start -n edu.ndsu.csci/.MainActivity
+```
+
+#### **Debug the Application**
+
+**Build debug APK with debugging symbols:**
+
+```bash
+./gradlew assembleDebug
+```
+
+**Install debug APK:**
+
+```bash
+./gradlew installDebug
+```
+
+**Start debugger in Android Studio:**
+- In Android Studio, go to **Run > Debug 'app'** or press `Shift + F9`
+- Or use command line:
+
+```bash
+./gradlew installDebug
+adb shell am start -D -n edu.ndsu.csci/.MainActivity
+```
+
+Then attach debugger in Android Studio (**Run > Attach Debugger to Android Process**).
+
+#### **Deploy to Device/Emulator**
+
+**Quick Deploy (Build, Install, and Run):**
+
+```bash
+./gradlew installDebug && adb shell am start -n edu.ndsu.csci/.MainActivity
+```
+
+**Deploy Release Build (unsigned):**
+
+```bash
+./gradlew assembleRelease
+adb install -r app/build/outputs/apk/release/app-release-unsigned.apk
+adb shell am start -n edu.ndsu.csci/.MainActivity
+```
+
+**Check Device/Emulator Connection:**
+
+```bash
+adb devices
+```
+
+**View Device Logs:**
+
+```bash
+adb logcat
+```
+
+**View Logs for App Only:**
+
+```bash
+adb logcat | grep edu.ndsu.csci
+```
+
+### Complete Workflow Examples
+
+**Full Development Workflow:**
+
+```bash
+# Navigate to project directory
+cd /Users/winstonspencer/git/CS712AndroidApp
+
+# Clean previous builds
+./gradlew clean
+
+# Build the project
+./gradlew build
+
+# Install on device/emulator
+./gradlew installDebug
+
+# Run the application
+adb shell am start -n edu.ndsu.csci/.MainActivity
+
+# View logs (optional)
+adb logcat | grep edu.ndsu.csci
+```
+
+**Quick Rebuild and Run:**
+
+```bash
+./gradlew clean assembleDebug && ./gradlew installDebug && adb shell am start -n edu.ndsu.csci/.MainActivity
+```
+
+**Testing Build:**
+
+```bash
+# Run unit tests
+./gradlew test
+
+# Run instrumented tests on device/emulator
+./gradlew connectedAndroidTest
+```
+
+### Gradle Tasks Reference
+
+| Task | Purpose |
+|------|---------|
+| `./gradlew clean` | Clean all build outputs |
+| `./gradlew build` | Build debug and release APKs |
+| `./gradlew assembleDebug` | Build debug APK only |
+| `./gradlew assembleRelease` | Build release APK (unsigned) |
+| `./gradlew installDebug` | Install debug APK on device |
+| `./gradlew installRelease` | Install release APK on device |
+| `./gradlew test` | Run unit tests |
+| `./gradlew connectedAndroidTest` | Run instrumented tests |
+| `./gradlew lint` | Run lint analysis |
+
+### ADB (Android Debug Bridge) Commands Reference
+
+| Command | Purpose |
+|---------|---------|
+| `adb devices` | List connected devices/emulators |
+| `adb install [APK]` | Install APK on device |
+| `adb install -r [APK]` | Reinstall APK (replace existing) |
+| `adb shell am start -n [PACKAGE]/[ACTIVITY]` | Launch activity |
+| `adb shell am start -D -n [PACKAGE]/[ACTIVITY]` | Launch activity with debugger wait |
+| `adb logcat` | View system logs |
+| `adb push [LOCAL] [DEVICE]` | Push file to device |
+| `adb pull [DEVICE] [LOCAL]` | Pull file from device |
+| `adb shell pm uninstall [PACKAGE]` | Uninstall app from device |
 
 ---
 
@@ -112,13 +243,13 @@ This assignment focuses on:
 
 ## 🧾 Git & Submission Details
 
-* **Branch:** `assignment-2`
-* **Commit Message Format:** `assignment-2`
+* **Branch:** `assignment-3`
+* **Commit Message Format:** `assignment-3`
 * Repository includes:
 
-    * Full source code
-    * This README
-    * Gradle build files
+  * Full source code
+  * This README
+  * Gradle build files
 
 ---
 

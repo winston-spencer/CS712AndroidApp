@@ -3,6 +3,12 @@
     <string name="title_activity_second">SecondActivity</string>
     <string name="student_id">Student ID: 1447675</string>
     <string name="student_name">Winston Spencer</string>
+    <string name="service_notification_title">Foreground Service</string>
+    <string name="service_notification_text">Service has started</string>
+    <string name="button_start_activity_explicitly">Start Activity Explicitly</string>
+    <string name="button_start_activity_implicitly">Start Activity Implicitly</string>
+    <string name="button_start_service">Start Service</string>
+    <string name="button_send_broadcast">Send Broadcast</string>
 
     <string-array name="mobile_se_challenges">
         <item>Device Fragmentation</item>
