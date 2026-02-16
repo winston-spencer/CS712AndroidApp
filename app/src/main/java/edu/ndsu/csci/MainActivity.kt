@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,7 +25,12 @@ import edu.ndsu.csci.ui.theme.CS712AndroidAppTheme
 
 class MainActivity : ComponentActivity() {
 
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     private val broadcastReceiver = MyBroadcastReceiver()
+    private lateinit var serviceStartedReceiver: ServiceStartedBroadcastReceiver
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -92,6 +98,7 @@ class MainActivity : ComponentActivity() {
 
 
     private fun registerBroadcastReceiver() {
+        Log.d(TAG, "Registering broadcast receivers")
         val filter = IntentFilter(MyBroadcastReceiver.ACTION_CUSTOM_BROADCAST)
         ContextCompat.registerReceiver(
             this,
@@ -99,11 +106,33 @@ class MainActivity : ComponentActivity() {
             filter,
             ContextCompat.RECEIVER_NOT_EXPORTED
         )
+        Log.d(TAG, "Custom broadcast receiver registered")
+
+        // Register service started receiver
+        serviceStartedReceiver = ServiceStartedBroadcastReceiver()
+        val serviceStartedFilter = IntentFilter(MyForegroundService.ACTION_SERVICE_STARTED)
+        Log.d(TAG, "About to register service started receiver for action: ${MyForegroundService.ACTION_SERVICE_STARTED}")
+        try {
+            ContextCompat.registerReceiver(
+                this,
+                serviceStartedReceiver,
+                serviceStartedFilter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+            Log.d(TAG, "Service started receiver registered successfully")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to register service started receiver", e)
+        }
     }
 
     private fun unregisterBroadcastReceiver() {
         try {
             unregisterReceiver(broadcastReceiver)
+        } catch (_: IllegalArgumentException) {
+            // Receiver was already unregistered
+        }
+        try {
+            unregisterReceiver(serviceStartedReceiver)
         } catch (_: IllegalArgumentException) {
             // Receiver was already unregistered
         }
@@ -148,7 +177,10 @@ fun MainScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(stringResource(R.string.button_start_activity_explicitly))
+                Text(
+                    stringResource(R.string.button_start_activity_explicitly),
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -187,7 +219,9 @@ fun MainScreen(
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    CS712AndroidAppTheme {
+    CS712AndroidAppTheme(
+        dynamicColor = false
+    ) {
         MainScreen()
     }
 }

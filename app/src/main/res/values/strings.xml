@@ -5,6 +5,7 @@
     <string name="student_name">Winston Spencer</string>
     <string name="service_notification_title">Foreground Service</string>
     <string name="service_notification_text">Service has started</string>
+    <string name="service_started_message">The service has started</string>
     <string name="button_start_activity_explicitly">Start Activity Explicitly</string>
     <string name="button_start_activity_implicitly">Start Activity Implicitly</string>
     <string name="button_start_service">Start Service</string>
