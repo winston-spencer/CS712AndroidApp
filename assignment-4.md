@@ -155,3 +155,12 @@ Added to the `<application>` element in `app/src/main/AndroidManifest.xml`:
 ### Observable Effect
 
 `android:largeHeap="true"` does not produce a visible UI change. Its effect is runtime: the Android system grants the app a larger heap size when requested via `Runtime.getRuntime().maxMemory()`. This reduces the likelihood of `OutOfMemoryError` crashes when the app handles memory-intensive operations such as loading large images, processing notification payloads, or managing foreground service data. The CS712AndroidApp already uses a foreground service (`MyForegroundService`), making this a practical safeguard against memory pressure.
+
+---
+
+## Submission Links
+
+- **Assignment 1 app AndroidManifest.xml:** https://raw.githubusercontent.com/winston-spencer/Aegis/refs/heads/master/app/src/main/AndroidManifest.xml
+- **GitHub repo:** https://github.com/winston-spencer/CS712AndroidApp.git
+- **CS712AndroidApp commit link:** https://github.com/winston-spencer/CS712AndroidApp/commit/b0be83a0006cb9589e6176b04bd7e438ea5616f0
+- **Commit ID:** `b0be83a0006cb9589e6176b04bd7e438ea5616f0`
