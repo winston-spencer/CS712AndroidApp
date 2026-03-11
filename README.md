@@ -59,8 +59,8 @@ This assignment focuses on:
 
 * **Language:** Kotlin
 * **Gradle DSL:** Kotlin DSL
-* **Build Tool:** Gradle 9.1.0
-* **Kotlin Version:** 2.2.0
+* **Build Tool:** Gradle 9.3.1
+* **Kotlin Version:** 2.2.10
 * **Java Runtime:** OpenJDK 21 (Zulu / JetBrains)
 
 ### Android Configuration
