@@ -43,10 +43,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        // Register broadcast receiver dynamically
-        registerBroadcastReceiver()
-
         setContent {
             CS712AndroidAppTheme {
                 MainScreen(
@@ -57,9 +53,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        registerBroadcastReceiver()
+    }
+
     override fun onStop() {
         super.onStop()
-        // Unregister broadcast receiver to prevent memory leaks
         unregisterBroadcastReceiver()
     }
 
@@ -211,6 +211,18 @@ fun MainScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(stringResource(R.string.button_send_broadcast))
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    val intent = Intent(context, ThirdActivity::class.java)
+                    context.startActivity(intent)
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.button_view_image_activity))
             }
         }
     }
