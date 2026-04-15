@@ -10,6 +10,9 @@
     <string name="button_start_activity_implicitly">Start Activity Implicitly</string>
     <string name="button_start_service">Start Service</string>
     <string name="button_send_broadcast">Send Broadcast</string>
+    <string name="button_view_image_activity">View Image Activity</string>
+    <string name="title_activity_third">ThirdActivity</string>
+    <string name="button_capture_image">Capture Image</string>
 
     <string-array name="mobile_se_challenges">
         <item>Device Fragmentation</item>

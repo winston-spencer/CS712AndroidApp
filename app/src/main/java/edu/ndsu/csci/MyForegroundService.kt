@@ -18,11 +18,6 @@ class MyForegroundService : Service() {
         private const val TAG = "MyForegroundService"
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        // No longer need to create channels here as they're created in onStartCommand
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(TAG, "onStartCommand called")
 
@@ -44,6 +39,7 @@ class MyForegroundService : Service() {
 
         // Also send broadcast to notify UI that service has started
         val broadcastIntent = Intent(ACTION_SERVICE_STARTED)
+        broadcastIntent.setPackage(packageName)
         Log.d(TAG, "Sending broadcast with action: $ACTION_SERVICE_STARTED")
         sendBroadcast(broadcastIntent)
         Log.d(TAG, "Broadcast sent")
