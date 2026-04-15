@@ -203,6 +203,55 @@ adb logcat | grep edu.ndsu.csci
 ./gradlew connectedAndroidTest
 ```
 
+---
+
+## 🤖 UI Automator Tests
+
+### Overview
+
+`LaunchAndNavigateTest` is a UI Automator instrumented test that verifies end-to-end navigation:
+
+1. Presses the Home button to start from a clean state
+2. Launches the app via an explicit Intent
+3. Clicks the **"Start Activity Explicitly"** button on `MainActivity`
+4. Verifies that **"Device Fragmentation"** is visible on `SecondActivity`
+
+### Prerequisites
+
+* A connected Android device **or** a running emulator (AVD)
+* USB debugging enabled on the device (if physical)
+* Verify the device is detected:
+
+```bash
+adb devices
+```
+
+### Build the Test APK (no device required)
+
+```bash
+./gradlew :app:assembleAndroidTest
+```
+
+### Run the UI Automator Test
+
+```bash
+./gradlew connectedAndroidTest
+```
+
+To run only `LaunchAndNavigateTest`:
+
+```bash
+./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=edu.ndsu.csci.LaunchAndNavigateTest
+```
+
+### View Test Results
+
+After the run, HTML results are at:
+
+```
+app/build/reports/androidTests/connected/index.html
+```
+
 ### Gradle Tasks Reference
 
 | Task | Purpose |
@@ -211,10 +260,11 @@ adb logcat | grep edu.ndsu.csci
 | `./gradlew build` | Build debug and release APKs |
 | `./gradlew assembleDebug` | Build debug APK only |
 | `./gradlew assembleRelease` | Build release APK (unsigned) |
+| `./gradlew assembleAndroidTest` | Build instrumented test APK only |
 | `./gradlew installDebug` | Install debug APK on device |
 | `./gradlew installRelease` | Install release APK on device |
 | `./gradlew test` | Run unit tests |
-| `./gradlew connectedAndroidTest` | Run instrumented tests |
+| `./gradlew connectedAndroidTest` | Run all instrumented tests on device/emulator |
 | `./gradlew lint` | Run lint analysis |
 
 ### ADB (Android Debug Bridge) Commands Reference
@@ -243,8 +293,8 @@ adb logcat | grep edu.ndsu.csci
 
 ## 🧾 Git & Submission Details
 
-* **Branch:** `assignment-3`
-* **Commit Message Format:** `assignment-3`
+* **Branch:** `assignment-6`
+* **Commit Message Format:** `assignment-6`
 * Repository includes:
 
   * Full source code
