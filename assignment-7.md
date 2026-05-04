@@ -3,6 +3,8 @@
 **Course:** CSCI-712
 **Student:** Winston Spencer
 
-**Repository Link:** https://github.com/winston-spencer/CS712AndroidApp/commit/f895428bee91722b330b2a0d688117a1cb2f1cfe
+**Repository Link:** https://github.com/winston-spencer/CS712AndroidApp.git 
+**Commit ID:** f895428bee91722b330b2a0d688117a1cb2f1cfe
+**Commit URL:** https://github.com/winston-spencer/CS712AndroidApp/commit/f895428bee91722b330b2a0d688117a1cb2f1cfe
 
 **Successfully requested the permission at runtime:** Yes
