@@ -40,9 +40,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val requestCustomPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            Log.d(TAG, "Custom permission edu.ndsu.csci.MSE712 granted")
+        } else {
+            Log.d(TAG, "Custom permission edu.ndsu.csci.MSE712 denied")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestCustomPermission()
         setContent {
             CS712AndroidAppTheme {
                 MainScreen(
@@ -61,6 +72,20 @@ class MainActivity : ComponentActivity() {
     override fun onStop() {
         super.onStop()
         unregisterBroadcastReceiver()
+    }
+
+    private fun requestCustomPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                "edu.ndsu.csci.MSE712"
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.d(TAG, "Custom permission edu.ndsu.csci.MSE712 already granted")
+            }
+            else -> {
+                requestCustomPermissionLauncher.launch("edu.ndsu.csci.MSE712")
+            }
+        }
     }
 
     private fun handleStartService() {
